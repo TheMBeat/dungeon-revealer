@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - run: npm config set fetch-retry-mintimeout 20000
+      - run: npm config set fetch-retry-maxtimeout 120000
+      - run: npm config set fetch-timeout 300000
       - run: npm install
       - run: npm run build
       - run: npm run eslint
