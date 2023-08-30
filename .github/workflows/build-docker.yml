@@ -21,7 +21,7 @@ jobs:
           echo "GH_TAG=$TAG" >> $GITHUB_ENV
           echo "COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
           echo "COMMIT_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          echo "DOCKER_REPO=ghcr.io/${{ github.repository }}" >> $GITHUB_ENV
+          echo "DOCKER_REPO=ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
 
       - name: Use Node.js 16.x
