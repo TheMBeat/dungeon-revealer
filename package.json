@@ -69,7 +69,7 @@
     "sanitize-html": "2.5.2",
     "serve-favicon": "2.5.0",
     "showdown": "1.9.1",
-    "socket.io": "4.4.0",
+    "socket.io": "4.7.2",
     "sqlite": "4.0.23",
     "sqlite3": "^5.0.10",
     "unzipper": "0.10.11"
