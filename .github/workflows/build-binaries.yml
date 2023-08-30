@@ -200,8 +200,8 @@ jobs:
           echo "$DESC"
           echo "DISCORD_EMBEDS=$(jq -nc --arg title "[${{ github.event.repository.name }}:${GITHUB_REF##*/}] binary build" --arg url "${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}" --arg color "16750848" --arg desc "$DESC" "$TEMPLATE")" >> $GITHUB_ENV
 
-      - name: Discord notification
-        if: success() && steps.branch-name.outputs.is_tag == 'false'
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_UPDATES }}
-        uses: Ilshidur/action-discord@0.3.2
+      #- name: Discord notification
+      #  if: success() && steps.branch-name.outputs.is_tag == 'false'
+      #  env:
+      #    DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_UPDATES }}
+      #  uses: Ilshidur/action-discord@0.3.2
