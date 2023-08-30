@@ -91,14 +91,14 @@ jobs:
       - name: Available platforms
         run: echo ${{ steps.qemu.outputs.platforms }}
 
-      - name: Enable Docker Experimental Features
-        run: |
-          echo $'{\n  "experimental": true\n}' | sudo tee /etc/docker/daemon.json
-          mkdir -p ~/.docker
-          echo $'{\n  "experimental": "enabled"\n}' | sudo tee ~/.docker/config.json
-          sudo service docker restart
-          docker version -f '{{.Client.Experimental}}'
-          docker version -f '{{.Server.Experimental}}'
+      #- name: Enable Docker Experimental Features
+      #  run: |
+      #    echo $'{\n  "experimental": true\n}' | sudo tee /etc/docker/daemon.json
+      #    mkdir -p ~/.docker
+      #    echo $'{\n  "experimental": "enabled"\n}' | sudo tee ~/.docker/config.json
+      #    sudo service docker restart
+      #    docker version -f '{{.Client.Experimental}}'
+      #    docker version -f '{{.Server.Experimental}}'
 
       - name: Build ${{ matrix.arch }}
         run: |
