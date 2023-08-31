@@ -71,7 +71,7 @@
     "showdown": "1.9.1",
     "socket.io": "4.7.2",
     "sqlite": "4.0.23",
-    "sqlite3": "^5.0.10",
+    "sqlite3": "^5.1.5",
     "unzipper": "0.10.11"
   },
   "devDependencies": {
