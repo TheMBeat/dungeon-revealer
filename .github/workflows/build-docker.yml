@@ -85,16 +85,16 @@ jobs:
             org.opencontainers.image.source="https://github.com/${{ github.repository }}"
             org.opencontainers.image.license=ISC
 
-      - name: Create commit comment
-        uses: peter-evans/commit-comment@v1
-        if: startsWith(github.ref, 'refs/heads/') # Just the branches
-        with:
-          body: |
-            **This commit has been published as a Docker image.** 🐋   
+      # - name: Create commit comment
+      #  uses: peter-evans/commit-comment@v1
+      #  if: startsWith(github.ref, 'refs/heads/') # Just the branches
+      #  with:
+      #    body: |
+      #      **This commit has been published as a Docker image.** 🐋   
 
-            You can easily try this build out locally with Docker.
+      #      You can easily try this build out locally with Docker.
 
-            `docker run -p 3000:3000 ${{ env.DOCKER_REPO }}:${{ env.COMMIT_SHORT }}`
+      #      `docker run -p 3000:3000 ${{ env.DOCKER_REPO }}:${{ env.COMMIT_SHORT }}`
 
       # TODO: refactor this to not repeat all the code in the Dev Release step
       - name: Version Release
