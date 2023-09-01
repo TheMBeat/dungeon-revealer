@@ -10,6 +10,7 @@ import { Modal } from "./modal";
 import * as UserStyleSheetOrchestrator from "./user-style-sheet-orchestrator";
 import { registerSoundPlayback } from "./register-sound-playback";
 import { GameSettingsProvider } from "./game-settings";
+import cv from "opencv-ts";
 
 loader.config({
   paths: {
@@ -72,4 +73,6 @@ const main = async () => {
 };
 
 registerSoundPlayback();
-main();
+cv.onRuntimeInitialized = () => {
+  main();
+};

@@ -35,6 +35,14 @@ const GraphQLMapTokenUpdateManyPropertiesInput = t.inputObjectType({
       description:
         "Color to be updated. Will not be updated if null is provided.",
     },
+    isLight: {
+      type: t.Boolean,
+      description: "Set light properties to token.",
+    },
+    lightRadius: {
+      type: t.Float,
+      description: "Set light radius properties to token.",
+    },
     tokenImageId: {
       type: t.ID,
       description:
@@ -92,6 +100,8 @@ const GraphQLMapTokenAddManyTokenInput = t.inputObjectType({
     rotation: t.arg(t.Float),
     isVisibleForPlayers: t.arg(t.Boolean),
     isMovableByPlayers: t.arg(t.Boolean),
+    isLight: t.arg(t.Boolean),
+    lightRadius: t.arg(t.Float),
     isLocked: t.arg(t.Boolean),
     tokenImageId: t.arg(t.ID),
   }),
@@ -259,6 +269,28 @@ const GraphQLMapUpdateGridInputType = t.inputObjectType({
   }),
 });
 
+const GraphQLMapUpdateLightResultType = t.objectType<lib.MapUpdateLightResult>({
+  name: "MapUpdateLightResult",
+  fields: () => [
+    t.field({
+      name: "updatedMap",
+      type: t.NonNull(GraphQLMapType),
+    }),
+  ],
+});
+
+const GraphQLMapUpdateLightInputType = t.inputObjectType({
+  name: "MapUpdateLightInput",
+  fields: () => ({
+    mapId: {
+      type: t.NonNullInput(t.ID),
+    },
+    light: {
+      type: t.NonNullInput(t.Boolean),
+    },
+  }),
+});
+
 const GraphQLMapPingInputType = t.inputObjectType({
   name: "MapPingInput",
   fields: () => ({
@@ -319,6 +351,8 @@ export const mutationFields = [
               input.properties.isVisibleForPlayers ?? undefined,
             isMovableByPlayers:
               input.properties.isMovableByPlayers ?? undefined,
+            isLight: input.properties.isLight ?? undefined,
+            lightRadius: input.properties.lightRadius ?? undefined,
             tokenImageId: input.properties.tokenImageId,
             rotation: input.properties.rotation ?? undefined,
           },
@@ -411,6 +445,16 @@ export const mutationFields = [
     },
     resolve: (_, { input }, context) =>
       RT.run(lib.mapUpdateGrid(input), context),
+  }),
+  t.field({
+    name: "mapUpdateLight",
+    description: "Update the light of a map.",
+    type: t.NonNull(GraphQLMapUpdateLightResultType),
+    args: {
+      input: t.arg(t.NonNullInput(GraphQLMapUpdateLightInputType)),
+    },
+    resolve: (_, { input }, context) =>
+      RT.run(lib.mapUpdateLight(input), context),
   }),
   t.field({
     name: "mapPing",
@@ -520,6 +564,14 @@ const GraphQLMapTokenType = t.objectType<MapTokenEntity>({
       type: t.NonNull(t.Boolean),
     }),
     t.field({
+      name: "isLight",
+      type: t.NonNull(t.Boolean),
+    }),
+    t.field({
+      name: "lightRadius",
+      type: t.NonNull(t.Float),
+    }),
+    t.field({
       name: "isLocked",
       type: t.NonNull(t.Boolean),
     }),
@@ -584,6 +636,11 @@ const GraphQLMapType = t.objectType<MapEntity>({
         )}`,
     }),
     t.field({
+      name: "mapPath",
+      description: "The URL of the map image.",
+      type: t.NonNull(t.String),
+    }),
+    t.field({
       name: "fogProgressImageUrl",
       description:
         "The URL of the fog progress image that is only accessible to the DM.",
@@ -615,6 +672,37 @@ const GraphQLMapType = t.objectType<MapEntity>({
         )}&cache_buster=${source.fogLiveRevision}`,
     }),
     t.field({
+      name: "wallProgressImageUrl",
+      description:
+        "The URL of the wall progress image that is only accessible to the DM.",
+      type: t.String,
+      resolve: (source, _, context) =>
+        `${context.publicUrl}/api/map/${
+          source.id
+        }/wall?authorization=${encodeURIComponent(
+          (context.session.role === "admin"
+            ? process.env["DM_PASSWORD"]
+            : context.session.role === "user"
+            ? process.env["PC_PASSWORD"]
+            : null) ?? ""
+        )}&cache_buster=${source.wallProgressRevision}`,
+    }),
+    t.field({
+      name: "wallLiveImageUrl",
+      description: "The URL of the wall live image, that is shown to players.",
+      type: t.String,
+      resolve: (source, _, context) =>
+        `${context.publicUrl}/api/map/${
+          source.id
+        }/wall-live?authorization=${encodeURIComponent(
+          (context.session.role === "admin"
+            ? process.env["DM_PASSWORD"]
+            : context.session.role === "user"
+            ? process.env["PC_PASSWORD"]
+            : null) ?? ""
+        )}&cache_buster=${source.wallLiveRevision}`,
+    }),
+    t.field({
       name: "grid",
       description:
         "The grid of the map. Is 'null' if no grid has been configured.",
@@ -622,6 +710,10 @@ const GraphQLMapType = t.objectType<MapEntity>({
     }),
     t.field({
       name: "showGrid",
+      type: t.NonNull(t.Boolean),
+    }),
+    t.field({
+      name: "light",
       type: t.NonNull(t.Boolean),
     }),
     t.field({

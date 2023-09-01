@@ -233,6 +233,46 @@ const Content = ({
     [dmAreaResponse.data?.map?.id, dmPassword]
   );
 
+  const sendLiveWallTaskRef = React.useRef<null | ISendRequestTask>(null);
+  const sendLiveWall = React.useCallback(
+    async (canvas: HTMLCanvasElement) => {
+      const loadedMapId = dmAreaResponse.data?.map?.id;
+
+      if (!loadedMapId) {
+        return;
+      }
+      if (sendLiveWallTaskRef.current) {
+        sendLiveWallTaskRef.current.abort();
+      }
+      const blob = await new Promise<Blob>((res) => {
+        canvas.toBlob((blob) => {
+          res(blob!);
+        });
+      });
+
+      const image = new File([blob], "wall.live.png", {
+        type: "image/png",
+      });
+      const formData = new FormData();
+      formData.append("image", image);
+
+      const task = sendRequest({
+        url: buildApiUrl(`/map/${loadedMapId}/sendWall`),
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: dmPassword ? `Bearer ${dmPassword}` : null,
+        },
+      });
+      sendLiveWallTaskRef.current = task;
+      const result = await task.done;
+      if (result.type !== "success") {
+        return;
+      }
+    },
+    [dmAreaResponse.data?.map?.id, dmPassword]
+  );
+
   const sendProgressFogTaskRef = React.useRef<null | ISendRequestTask>(null);
   const saveFogProgress = React.useCallback(
     async (canvas: HTMLCanvasElement) => {
@@ -274,6 +314,49 @@ const Content = ({
         },
       });
       sendProgressFogTaskRef.current = task;
+      const result = await task.done;
+      if (result.type !== "success") {
+        return;
+      }
+    },
+    [dmAreaResponse.data?.map?.id, dmPassword]
+  );
+  const sendProgressWallTaskRef = React.useRef<null | ISendRequestTask>(null);
+  const saveWallProgress = React.useCallback(
+    async (canvas: HTMLCanvasElement) => {
+      const loadedMapId = dmAreaResponse.data?.map?.id;
+
+      if (!loadedMapId) {
+        return;
+      }
+
+      if (sendLiveWallTaskRef.current) {
+        sendLiveWallTaskRef.current.abort();
+      }
+      const blob = await new Promise<Blob>((res) => {
+        canvas.toBlob((blob) => {
+          res(blob!);
+        });
+      });
+
+      const formData = new FormData();
+
+      formData.append(
+        "image",
+        new File([blob], "wall.png", {
+          type: "image/png",
+        })
+      );
+
+      const task = sendRequest({
+        url: buildApiUrl(`/map/${loadedMapId}/wall`),
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: dmPassword ? `Bearer ${dmPassword}` : null,
+        },
+      });
+      sendProgressWallTaskRef.current = task;
       const result = await task.done;
       if (result.type !== "success") {
         return;
@@ -409,6 +492,8 @@ const Content = ({
                         rotation: 0,
                         isVisibleForPlayers: false,
                         isMovableByPlayers: false,
+                        isLight: false,
+                        lightRadius: 0,
                         isLocked: false,
                         tokenImageId,
                         label: "",
@@ -490,7 +575,9 @@ const Content = ({
               map={dmAreaResponse.data.map}
               liveMapId={dmAreaResponse.data?.activeMap?.id ?? null}
               sendLiveMap={sendLiveMap}
+              sendLiveWall={sendLiveWall}
               saveFogProgress={saveFogProgress}
+              saveWallProgress={saveWallProgress}
               hideMap={hideMap}
               showMapModal={showMapModal}
               openNotes={() => {
