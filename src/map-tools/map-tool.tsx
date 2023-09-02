@@ -17,14 +17,18 @@ export type SharedMapToolState = {
   mapImage: HTMLImageElement;
   mapCanvas: HTMLCanvasElement;
   fogCanvas: HTMLCanvasElement;
+  wallCanvas: HTMLCanvasElement;
   fogTexture: THREE.CanvasTexture;
+  wallTexture: THREE.CanvasTexture;
   mapState: {
     position: SpringValue<Vector3D>;
     scale: SpringValue<Vector3D>;
+    rotate: SpringValue<number>;
   };
   setMapState: SpringStartFn<{
     position: Vector3D;
     scale: Vector3D;
+    rotate: number;
   }>;
   dimensions: Dimensions;
   viewport: ViewportData;
@@ -70,6 +74,7 @@ export type MapToolMapGestureHandlers = Handlers<{
   onPointerMove: PointerEvent;
   onDrag: PointerEvent;
   onClick: PointerEvent;
+  onWheelEnd: WheelEvent;
 }>;
 
 /**

@@ -79,6 +79,7 @@ const PlayerMap_ActiveMapQuery = graphql`
         columnWidth
         columnHeight
       }
+      mapPath
       ...mapView_MapFragment
     }
   }
@@ -237,6 +238,16 @@ const PlayerMap = ({
     }
   );
   const noteWindowActions = useNoteWindowActions();
+
+  var videoControls = false;
+  var mapFileType = currentMap?.data?.activeMap?.mapPath.split(".")[1];
+  if (mapFileType == "mp4") {
+    var videoControls = true;
+  }
+
+  const [videoState, setVideoState] = React.useState(true);
+  const [videoVolume, setVideoVolume] = React.useState(0.2);
+
   return (
     <>
       <div
@@ -294,6 +305,7 @@ const PlayerMap = ({
                   UpdateTokenContext,
                 ]}
                 fogOpacity={1}
+                wallOpacity={0}
               />
             </React.Suspense>
           ) : null}
@@ -381,6 +393,32 @@ const PlayerMap = ({
                         </Toolbar.LongPressButton>
                       </Toolbar.Item>
                       <Toolbar.Item isActive>
+                        <Toolbar.Button
+                          onClick={() => {
+                            controlRef.current
+                              ?.getContext()
+                              .mapState.rotate.finish();
+                            controlRef.current?.controls.rotate(-90);
+                          }}
+                        >
+                          <Icon.RotateCCW boxSize="20px" />
+                          <Icon.Label>Rotate</Icon.Label>
+                        </Toolbar.Button>
+                      </Toolbar.Item>
+                      <Toolbar.Item isActive>
+                        <Toolbar.Button
+                          onClick={() => {
+                            controlRef.current
+                              ?.getContext()
+                              .mapState.rotate.finish();
+                            controlRef.current?.controls.rotate(+90);
+                          }}
+                        >
+                          <Icon.RotateCW boxSize="20px" />
+                          <Icon.Label>Rotate</Icon.Label>
+                        </Toolbar.Button>
+                      </Toolbar.Item>
+                      <Toolbar.Item isActive>
                         <Toolbar.LongPressButton
                           onClick={() => {
                             noteWindowActions.showNoteInWindow(
@@ -394,6 +432,54 @@ const PlayerMap = ({
                           <Icon.Label>Notes</Icon.Label>
                         </Toolbar.LongPressButton>
                       </Toolbar.Item>
+                      {videoControls ? (
+                        <Toolbar.Item isActive={videoState}>
+                          <Toolbar.Button
+                            onClick={() => {
+                              setVideoState(!videoState);
+                              if (videoState) {
+                                var playpauseEvent = new CustomEvent(
+                                  "videoControl",
+                                  { detail: { pause: true } }
+                                );
+                              } else {
+                                var playpauseEvent = new CustomEvent(
+                                  "videoControl",
+                                  { detail: { play: true } }
+                                );
+                              }
+                              document.dispatchEvent(playpauseEvent);
+                            }}
+                          >
+                            <Icon.Play boxSize="20px" />
+                            <Icon.Label>Play</Icon.Label>
+                          </Toolbar.Button>
+                        </Toolbar.Item>
+                      ) : null}
+                      {videoControls ? (
+                        <Toolbar.Item isActive>
+                          <input
+                            style={{
+                              height: "25%",
+                              WebkitAppearance: "auto",
+                              margin: 0,
+                            }}
+                            type="range"
+                            min={0}
+                            max={1}
+                            step={0.02}
+                            value={videoVolume}
+                            onChange={(event) => {
+                              const volume = new CustomEvent("videoControl", {
+                                detail: { volume: event.target.valueAsNumber },
+                              });
+                              document.dispatchEvent(volume);
+                              setVideoVolume(event.target.valueAsNumber);
+                            }}
+                          />
+                          <Icon.Label>Volume</Icon.Label>
+                        </Toolbar.Item>
+                      ) : null}
                     </Toolbar.Group>
                   </React.Fragment>
                 ) : null}
