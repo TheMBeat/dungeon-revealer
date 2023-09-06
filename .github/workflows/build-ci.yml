@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: [16.x]
+        node-version: [18.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -21,13 +21,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: npm config set fetch-retry-mintimeout 20000
-      - run: npm config set fetch-retry-maxtimeout 120000
-      - run: npm config set fetch-timeout 300000
-      - run: npm install
-      - run: npm run build
-      - run: npm run eslint
-      - run: npm run test
+      #- run: npm config set fetch-retry-mintimeout 20000
+      #- run: npm config set fetch-retry-maxtimeout 120000
+      #- run: npm config set fetch-timeout 300000
+      - run: yarn install
+      - run: yarn run build
+      - run: yarn run eslint
+      - run: yarn run test
         env:
           CI: true
 
