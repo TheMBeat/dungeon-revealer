@@ -6,7 +6,7 @@ This document will help you setting up this project on your machine for developm
 
 Make sure you have the following software installed:
 
-- Node.js 16 (verify with `node --version`)
+- Node.js 18 (verify with `node --version`)
 - npm 7 (verify with `npm --version`)
 
 ## Setting up the project
