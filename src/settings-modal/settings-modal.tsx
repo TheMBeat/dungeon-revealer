@@ -45,6 +45,12 @@ export const SettingsModal = (props: {
           >
             Set clients to follow any screen movements the DM makes.
           </Checkbox>
+          <Checkbox
+            isChecked={localStorage.getItem('darkMode') === 'true'}
+            onChange={(event) => localStorage.setItem('darkMode', String(event.target.checked))}
+          >
+            Enable Dark Mode
+          </Checkbox>
         </Modal.Body>
         <Modal.Footer>
           <Modal.Actions>
