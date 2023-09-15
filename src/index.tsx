@@ -5,7 +5,7 @@ import { Global, CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { ChakraProvider } from "@chakra-ui/react";
 import { getUrlPrefix, buildUrl } from "./public-url";
-import { globalStyles } from "./global-styles";
+import { globalStyles, globalStylesDark } from "./global-styles";
 import { Modal } from "./modal";
 import * as UserStyleSheetOrchestrator from "./user-style-sheet-orchestrator";
 import { registerSoundPlayback } from "./register-sound-playback";
@@ -36,6 +36,8 @@ const urlSearchParameter = new URLSearchParams(window.location.search);
 
 const main = async () => {
   let component = null;
+  const darkMode = localStorage.getItem('darkMode') === 'true';
+  document.body.classList.toggle('dark-mode', darkMode);
   switch (pathname) {
     case "/dm": {
       const { DmArea } = await import("./dm-area/dm-area");
@@ -59,7 +61,7 @@ const main = async () => {
           <GameSettingsProvider>
             <UserStyleSheetOrchestrator.Provider>
               <Modal.Provider>
-                <Global styles={globalStyles} />
+                <Global styles={darkMode ? globalStylesDark : globalStyles} />
                 {component}
               </Modal.Provider>
             </UserStyleSheetOrchestrator.Provider>
