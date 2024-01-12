@@ -121,7 +121,7 @@ jobs:
 
       - name: Get branch names
         id: branch-name
-        uses: tj-actions/branch-names@v4.9
+        uses: tj-actions/branch-names@v7.0.7
 
       - name: "Set environment: Branch"
         if: steps.branch-name.outputs.is_tag == 'false'
