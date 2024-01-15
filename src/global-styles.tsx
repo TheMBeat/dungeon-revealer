@@ -1,7 +1,14 @@
 import { css } from "@emotion/react";
 import { buildUrl } from "./public-url";
+import darkModeTheme from '../theme/dark-mode-theme';
+import { ThemeContext } from '../context/ThemeContext';
 
-export const globalStyles = css`
+import { useContext } from 'react';
+
+export const useGlobalStyles = () => {
+  const { theme } = useContext(ThemeContext);
+
+  return theme === 'dark' ? darkModeTheme.globalStyles : css`
   @font-face {
     font-family: "folkard";
     src: url("${buildUrl("/fonts/folkard.woff")}") format("woff");
@@ -89,3 +96,4 @@ export const globalStyles = css`
     height: 20px;
   }
 `;
+};
