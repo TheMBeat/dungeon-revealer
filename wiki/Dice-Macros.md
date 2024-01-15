@@ -81,7 +81,7 @@ As well as the following custom components for structuring content:
 - BoxRow (Horizontal row)
 - BoxColumn (horizontal row column)
 
-Variables can bes set by using the variable name surrounded by curly brackets `{{myVariable}}`.
+Variables can be set by using the variable name surrounded by curly brackets `{{myVariable}}`.
 
 The template can be used by setting the `templateId` attribute to the Template `id`. In addition variable values can be passed by setting them as attributes on the `ChatMacro` and prefixing them with `var-`.
 
@@ -148,11 +148,11 @@ This allows powerful features such as conditionals, variable declarations and ma
     "value": 0,
     "min": -20,
     "max": 20
-  }}
+
 >
   {% assign attackRoll = "1d20" | diceRoll %}
   {% assign result = attackRoll.result | plus: vars.handicap %}
-  <div style="color:red;font-weight:bold">Attack with {{weapon}}</div>
+  <div>Attack with {{weapon}}</div>
   <div>
     <span style="font-weight:bold">Attack Roll:</span>
     {% renderDiceRoll attackRoll %}
