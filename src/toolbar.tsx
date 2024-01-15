@@ -1,6 +1,7 @@
 import React, { useMemo, useEffect } from "react";
 import styled from "@emotion/styled/macro";
 import type { ReactEventHandlers } from "react-use-gesture/dist/types";
+import { ChatToggleButton } from 'src/chat-toggle-button.tsx';
 
 const MARGIN_2 = "4px";
 const BORDER_RADIUS = "5px";
@@ -147,6 +148,7 @@ type ToolbarType = React.FC<{ horizontal?: boolean }> & {
   Button: typeof ToolboxButton;
   LongPressButton: typeof LongPressButton;
   Popup: typeof ToolbarItemPopup;
+  Toggle: typeof ChatToggleButton;
 };
 
 export const Toolbar: ToolbarType = ({ children, horizontal, ...props }) => {
@@ -159,6 +161,7 @@ export const Toolbar: ToolbarType = ({ children, horizontal, ...props }) => {
     <ToolbarContext.Provider value={contextValue}>
       <ToolbarBase horizontal={horizontal} {...props}>
         {children}
+        <Toolbar.Toggle />
       </ToolbarBase>
     </ToolbarContext.Provider>
   );
