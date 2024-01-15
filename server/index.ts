@@ -26,7 +26,14 @@ const getListeningAddresses = () => {
   return [`http://${env.HOST}:${env.PORT}`];
 };
 
-bootstrapServer(env).then(({ httpServer }) => {
+bootstrapServer(env).then(({ httpServer }) => { 
+  httpServer.on('error', (err) => { 
+    console.error('Server startup error:', err); 
+    process.exit(1); 
+  }); 
+  httpServer.on('listening', () => { 
+    console.log('Server is listening.'); 
+  });
   const server = httpServer.listen(env.PORT, env.HOST, () => {
     let versionString;
     if (env.VERSION.status === "release") {
@@ -70,7 +77,14 @@ DM Section: ${addresses[0]}/dm`);
 
   const shutdownHandler = once(() => {
     console.log("Shutting down");
-    httpServer.close((err) => {
+    httpServer.close((err) => { 
+  if (err) { 
+    console.error('Server shutdown error:', err); 
+    process.exit(1); 
+  } else { 
+    console.log('Server successfully shut down.'); 
+    process.exit(0); 
+  }
       if (err) {
         console.error(err);
         process.exitCode = 1;
