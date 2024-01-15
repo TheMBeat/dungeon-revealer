@@ -88,7 +88,7 @@ DM Section: ${addresses[0]}/dm`);
   server.on("connection", (connection) => {  activeConnections.add(connection);
     connections.add(connection);
     connection.on("close", () => {
-      connections.delete(connection);
+      activeConnections.delete(connection);
     });
   });
 
@@ -109,7 +109,7 @@ DM Section: ${addresses[0]}/dm`);
       }
     });
 
-    for (const connection of connections) {
+    for (const connection of activeConnections) {
       connection.destroy();
     }
   });
