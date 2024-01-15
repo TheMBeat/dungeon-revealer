@@ -16,7 +16,7 @@ const ImageModel = io.type(
   "Image"
 );
 
-export const isTypeOfImage = ImageModel.is;
+export const isValidResourceNote = ImageModel.is;
 
 export type ImageModelType = io.TypeOf<typeof ImageModel>;
 
@@ -43,7 +43,7 @@ export const resolveImage = (id: string) =>
 export const GraphQLImageType = t.objectType<ImageModelType>({
   name: "Image",
   interfaces: [Relay.GraphQLNodeInterface],
-  isTypeOf: isTypeOfImage,
+  isTypeOf: isValidResourceNote,
   fields: () => [
     t.field({
       name: "id",
