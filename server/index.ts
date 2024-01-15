@@ -68,7 +68,7 @@ Player Section: ${addresses[0]}
 DM Section: ${addresses[0]}/dm`);
 
     console.log(`\n-------------------\n`);
-    process.on('SIGINT', () => {
+    process.on('SIGINT', (shutdownHandler) => {
     console.log("Shutting down gracefully");
     httpServer.close((err) => {
     if (err) {
@@ -97,7 +97,10 @@ DM Section: ${addresses[0]}/dm`);
     httpServer.close((err) => { 
   
   if (err) { 
-    console.error('Server shutdown error:', err); 
+    console.error('Server shutdown error:', err);
+    if (err) {
+      process.exitCode = 1;
+    } 
     process.exit(1); 
   } else { 
     console.log('Server shut down gracefully.'); 
