@@ -27,7 +27,10 @@ const getListeningAddresses = () => {
 };
 
 bootstrapServer(env).then(({ httpServer }) => { 
-  httpServer.on('error', (err) => { 
+  httpServer.on('error', (err) => {
+  console.error('Server startup error:', err);
+  process.exitCode = 1;
+  process.exit(1);
     console.error('Server startup error:', err); 
     process.exit(1); 
   }); 
@@ -78,13 +81,7 @@ DM Section: ${addresses[0]}/dm`);
   const shutdownHandler = once(() => {
     console.log("Shutting down");
     httpServer.close((err) => { 
-  if (err) { 
-    console.error('Server shutdown error:', err); 
-    process.exit(1); 
-  } else { 
-    console.log('Server successfully shut down.'); 
-    process.exit(0); 
-  }
+  
   if (err) { 
     console.error('Server shutdown error:', err); 
     process.exit(1); 
