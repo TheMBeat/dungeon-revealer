@@ -94,7 +94,7 @@ Heroku is a platform supporting one-click deployments and includes a free usage 
 
 [![button](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/dungeon-revealer/dungeon-revealer/tree/v1.17.1)
 
-### Using the app
+### Using the dungeon-revealer App
 
 The app is separated into two sections. One for the dungeon master and one for the players. Check out the [wiki](https://github.com/dungeon-revealer/dungeon-revealer/wiki) for a detailed walkthrough!
 
@@ -106,9 +106,11 @@ To clear areas of the map, click and draw on the map. You can switch the brush m
 
 To switch to a different map, click "Map Library", and then select one of the maps you have already uploaded and click "Load". The "LIVE" indicator in the lower right indicates if the map currently on the dungeon master page is being presented on the player page. the "Stop Sharing" button will blank the player page in preparation for a new map to be loaded.
 
-You can add token with the "Token" tool. Click anywhere on the map to place it. The token can be changed by opening the context menu trough right-clicking on a single token. You can alter it's label, color and size.
+**Keyboard Shortcuts for Players**
 
-##### Shortcuts
+- `Long Click` - Place a point of interest on the map.
+
+##### Keyboard Shortcuts for the Dungeon Master
 
 | Key            | Functionality                                                                                 |
 | -------------- | --------------------------------------------------------------------------------------------- |
@@ -118,12 +120,17 @@ You can add token with the "Token" tool. Click anywhere on the map to place it. 
 | `4`            | select mark tool.                                                                             |
 | `5`            | select token tool.                                                                            |
 | `Shift`        | toggle between hide/reveal.                                                                   |
-| `CMD/Ctrl + S` | push map to players.                                                                          |
+| ``CMD/Ctrl + S` - Push map to players.` | push map to players.                                                                          |
 | Hold `Alt`     | use move tool while `Alt` key is pressed and return to previous mode after `Alt` is released. |
 
 #### Players
 
-Navigate to the server using a web browser and wait at the home page. (The connection information is displayed in command prompt for convenience.) When the dungeon master is ready, they will push a map to your webpage. You will see either a black screen or a partially covered image. You can zoom in/out and pan the map. On a long click you will place a "point of interest" on the map that will show as a red circle.
+**Player Functionality**
+
+Navigate to the server using a web browser and wait at the home page. (The connection information is displayed in command prompt for convenience.) Once the dungeon master is ready, they will push a map to your webpage. You will see either a black screen or a partially covered image. You can zoom in/out and pan the map. On a long click, you will place a "point of interest" on the map that will show as a red circle.
+**Keyboard Shortcuts for Players**
+
+- `Long Click` - Place a point of interest on the map.
 
 ## Contributing
 
