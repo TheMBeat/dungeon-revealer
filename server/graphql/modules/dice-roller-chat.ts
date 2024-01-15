@@ -215,7 +215,7 @@ const GraphQLSharedResourceEnumType = t.unionType<
   name: "SharedResource",
   types: [NotesModule.GraphQLNoteType, ImageModule.GraphQLImageType],
   resolveType: (input) => {
-    if (NotesModule.isTypeOfNote(input)) return NotesModule.GraphQLNoteType;
+    if (NotesModule.isTypeOfResourceNote(input)) return NotesModule.GraphQLNoteType;
     if (ImageModule.isTypeOfImage(input)) return ImageModule.GraphQLImageType;
     throw new Error("Invalid State.");
   },
