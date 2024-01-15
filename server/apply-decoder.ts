@@ -17,6 +17,17 @@ export const applyDecoder = <D, T extends t.Type<any, any, any>>(
     }),
     (either) => {
       if (E.isLeft(either)) {
+        return RT.fromTask(() => Promise.reject(new Error(`Decoding error: 
+${PathReporter.report(E.left(errors)).join('\n')}`)));
+      }
+      if (E.isLeft(either)) {
+        return RT.fromTask(() => Promise.reject(either.left));
+      }
+      if (E.isLeft(either)) {
+        return RT.fromTask(() => Promise.reject(new Error(`Decoding error: 
+${PathReporter.report(E.left(errors)).join('\n')}`)));
+      }
+      if (E.isLeft(either)) {
         return RT.fromTask(() => Promise.reject(either.left));
       }
       return RT.fromTask(() => Promise.resolve(either.right));
