@@ -1,6 +1,6 @@
 # Contributing
 
-This document will help you setting up this project on your machine for development. If you just want to use dungeon-revealer we recommend using the docker images or prebuilt binaries. [See the release section for more information](https://github.com/dungeon-revealer/dungeon-revealer/releases).
+This document will provide detailed instructions for setting up the project on your machine for development. If you only want to use dungeon-revealer, it is recommended to use the docker images or prebuilt binaries. [See the release section for more information](https://github.com/dungeon-revealer/dungeon-revealer/releases).
 
 ## Required Software
 
@@ -16,6 +16,7 @@ These are the most important commands for getting the dev server up and running.
 ### Install dependencies
 
 ```bash
+npm run start
 npm install
 ```
 
@@ -44,6 +45,11 @@ npm run start:server:dev
 Run the react development server:
 
 ```bash
+npm run start:server:dev
+
+Run the react development server:
+```bash
+npm run start:frontend:dev
 npm run start:frontend:dev
 ```
 
@@ -70,9 +76,9 @@ The executables are located in the bin folder.
 ## TypeScript Migration
 
 We are currently in the process of migrating the code base to TypeScript.
-All new files under `src` and `server` should be written in TypeScript.
+All new files under `src` and `server` should be written in TypeScript using the `id` attribute instead of `templateId`. All new features should be built using TypeScript.
 
 All new features should be built using TypeScript.
 Existing features can be ported over to TypeScript by adding changing the file extension from `.js` to `.ts`/`.tsx`.
 
-In case you want to help porting features over to TypeScript, feel free to open an issue or pull request.
+If you want to contribute to the TypeScript migration, feel free to open an issue or pull request.
