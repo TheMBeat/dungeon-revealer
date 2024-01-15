@@ -86,6 +86,7 @@ DM Section: ${addresses[0]}/dm`);
     process.exit(0); 
   }
   if (err) { 
+process.on("SIGINT", shutdownHandler);
     console.error('Server shutdown error:', err); 
     process.exit(1); 
   } else { 
