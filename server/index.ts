@@ -30,6 +30,7 @@ bootstrapServer(env).then(({ httpServer }) => {
   httpServer.on('error', (err) => {
   console.error('Server startup error:', err);
   process.exitCode = 1;
+  process.exitCode = 1;
   process.exit(1);
     console.error('Server startup error:', err); 
     process.exit(1); 
@@ -68,7 +69,7 @@ Player Section: ${addresses[0]}
 DM Section: ${addresses[0]}/dm`);
 
     console.log(`\n-------------------\n`);
-    const shutdownHandler = once(() => {
+    process.on('SIGINT', () => {
     console.log("Shutting down");
     httpServer.close((err) => { 
       if (err) { 
@@ -84,8 +85,8 @@ DM Section: ${addresses[0]}/dm`);
   process.on("SIGINT", shutdownHandler);
 });
 
-  const connections = new Set<Socket>();
-  server.on("connection", (connection) => {
+  const activeConnections = new Set<Socket>();
+  server.on("connection", (connection) => {  activeConnections.add(connection);
     connections.add(connection);
     connection.on("close", () => {
       connections.delete(connection);

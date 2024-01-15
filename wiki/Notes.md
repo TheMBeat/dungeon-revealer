@@ -42,7 +42,29 @@ Click on a note from the list to open a box with the full note. There are button
 
 ![note](https://user-images.githubusercontent.com/9096667/87480109-434b7e80-c5f2-11ea-9d78-0e51fadf2196.png)
 
+On the main page, click on the search icon in the top right corner. A search box will pop up and you can search for any term. Players can also search through any notes with public permissions.
+
+![search](https://user-images.githubusercontent.com/9096667/87480101-4181bb00-c5f2-11ea-95f1-34a13e3c75f2.png)
+
+Click on a note from the list to open a box with the full note. There are buttons at the top that let you quickly edit, change permissions, or share the note. Sharing the note sends the note to the chat.
+
+![note](https://user-images.githubusercontent.com/9096667/87480109-434b7e80-c5f2-11ea-9d78-0e51fadf2196.png)
+
 ## Importing Notes
+
+As the admin it is possible to import markdown files into dungeon-revealer.
+You can either drag & drop a `.zip` archive containing markdown files or a single markdown file into the dungeon-master section for starting an import.
+
+The files must follow this format convention:
+
+```md
+---
+id: unique-id
+title: The title of the note
+is_entry_point: true
+---
+
+This is the text of the note. It can contain any type of markdown. Such as **bold text** or [links](http://google.de).
 
 As the admin it is possible to import markdown files into dungeon-revealer.
 You can either drag & drop a `.zip` archive containing markdown files or a single markdown file into the dungeon-master section for starting an import.
