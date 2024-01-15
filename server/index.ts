@@ -68,7 +68,21 @@ Player Section: ${addresses[0]}
 DM Section: ${addresses[0]}/dm`);
 
     console.log(`\n-------------------\n`);
+    const shutdownHandler = once(() => {
+    console.log("Shutting down");
+    httpServer.close((err) => { 
+      if (err) { 
+        console.error('Server shutdown error:', err); 
+        process.exit(1); 
+      } else { 
+        console.log('Server successfully shut down.'); 
+        process.exit(0); 
+      }
+    });
   });
+
+  process.on("SIGINT", shutdownHandler);
+});
 
   const connections = new Set<Socket>();
   server.on("connection", (connection) => {
