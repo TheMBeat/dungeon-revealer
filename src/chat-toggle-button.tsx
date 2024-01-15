@@ -1,10 +1,17 @@
 import * as React from "react";
 import styled from "@emotion/styled/macro";
 import * as Icon from "./feather-icons";
+import { ThemeContext } from '../context/ThemeContext';
 import { darken } from "polished";
 
-export const IconButton = styled.button<{ colorVariant?: "white" | "green" }>`
+const buttonColors = {
+  light: '#FFFFFF',
+  dark: '#333333'
+};
+
+export const IconButton = styled.button<{ theme: 'light' | 'dark' }>`
   position: relative;
+  background-color: ${(p) => buttonColors[p.theme]};
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   height: 30px;
   width: 30px;
@@ -39,10 +46,9 @@ export const ButtonBadge = styled.span`
   background-color: red;
 `;
 
-export const ChatToggleButton: React.FC<{
-  hasUnreadMessages: boolean;
-  onClick: React.ComponentProps<"button">["onClick"];
-}> = ({ hasUnreadMessages, onClick }) => {
+export const ChatToggleButton: React.FC<{ hasUnreadMessages: boolean; }> = ({ hasUnreadMessages }) => {
+  const { theme, toggleTheme } = React.useContext(ThemeContext);
+  const onClick = () => toggleTheme();
   return (
     <IconButton onClick={onClick} style={{ pointerEvents: "all" }}>
       <Icon.MessageCircle boxSize="20px" />
