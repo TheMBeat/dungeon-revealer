@@ -28,7 +28,8 @@ const getListeningAddresses = () => {
 
 bootstrapServer(env).then(({ httpServer }) => { 
   httpServer.on('error', (err) => {
-  console.error('Server startup error:', err);
+  console.error('Server startup error:', err.message);
+    process.exitCode = 1;
   process.exitCode = 1;
   process.exitCode = 1;
   process.exit(1);
