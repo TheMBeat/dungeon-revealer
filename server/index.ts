@@ -28,16 +28,14 @@ const getListeningAddresses = () => {
 
 bootstrapServer(env).then(({ httpServer }) => { 
   httpServer.on('error', (err) => {
-  console.error('Server startup error:', err.message);
+  console.log('Server startup error:', err);
     process.exitCode = 1;
-  process.exitCode = 1;
-  process.exitCode = 1;
-  process.exit(1);
+    process.exit(1);
     console.error('Server startup error:', err); 
     process.exit(1); 
   }); 
   httpServer.on('listening', () => { 
-    console.log('Server is listening.'); 
+    console.log('Server started and is listening.'); 
   });
   const server = httpServer.listen(env.PORT, env.HOST, () => {
     let versionString;
@@ -71,16 +69,16 @@ DM Section: ${addresses[0]}/dm`);
 
     console.log(`\n-------------------\n`);
     process.on('SIGINT', () => {
-    console.log("Shutting down");
-    httpServer.close((err) => { 
-      if (err) { 
-        console.error('Server shutdown error:', err); 
-        process.exit(1); 
-      } else { 
-        console.log('Server successfully shut down.'); 
-        process.exit(0); 
-      }
-    });
+    console.log("Shutting down gracefully");
+    httpServer.close((err) => {
+    if (err) {
+      console.error('Server shutdown error:', err);
+      process.exit(1);
+    } else {
+      console.log('Server successfully shut down.');
+      process.exit(0);
+    }
+  });
   });
 
   process.on("SIGINT", shutdownHandler);
@@ -90,7 +88,7 @@ DM Section: ${addresses[0]}/dm`);
   server.on("connection", (connection) => {  activeConnections.add(connection);
     connections.add(connection);
     connection.on("close", () => {
-      connections.delete(connection);
+      activeConnections.delete(connection);
     });
   });
 
@@ -102,7 +100,7 @@ DM Section: ${addresses[0]}/dm`);
     console.error('Server shutdown error:', err); 
     process.exit(1); 
   } else { 
-    console.log('Server successfully shut down.'); 
+    console.log('Server shut down gracefully.'); 
     process.exit(0); 
   }
       if (err) {
@@ -111,7 +109,7 @@ DM Section: ${addresses[0]}/dm`);
       }
     });
 
-    for (const connection of connections) {
+    for (const connection of activeConnections) {
       connection.destroy();
     }
   });
