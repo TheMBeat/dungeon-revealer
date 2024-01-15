@@ -6,6 +6,8 @@ import type { PubSub } from "@graphql-yoga/subscription";
 import type { TokenImageUploadRegister } from "../token-image-lib";
 import type { MapImageUploadRegister, MapPubSubConfig } from "../map-lib";
 import type { NotesPubSubConfig } from "../notes-lib";
+import type { TokenImageModule } from "./modules/token-image";
+import type { MapModule } from "./modules/map";
 
 import type { SocketSessionRecord } from "../socket-session-store";
 import type { Database } from "sqlite";
@@ -15,6 +17,8 @@ import type { SplashImageState } from "../splash-image-state";
 import type { Maps } from "../maps";
 import type { Settings } from "../settings";
 
+import { UserPubSubConfig } from "../user";
+import { ChatPubSubConfig } from "../chat";
 export type PubSubConfig = MapPubSubConfig &
   UserPubSubConfig &
   NotesPubSubConfig &
@@ -80,6 +84,16 @@ const nodeField = t.field({
     ),
 });
 
+const Mutation = t.mutationType({
+  fields: () => [
+    ...UserModule.mutationFields,
+    ...DiceRollerChatModule.mutationFields,
+    ...NotesModule.mutationFields,
+    ...TokenImageModule.mutationFields,
+    ...MapModule.mutationFields,
+  ],
+});
+
 const Query = t.queryType({
   fields: () => [
     ...DiceRollerChatModule.queryFields,
@@ -110,6 +124,22 @@ const Mutation = t.mutationType({
     ...MapModule.mutationFields,
   ],
 });
+
+import { specifiedDirectives } from "graphql";
+import * as RelaySpecModule from "./modules/relay-spec";
+import * as DiceRollerChatModule from "./modules/dice-roller-chat";
+import * as UserModule from "./modules/user";
+import * as NotesModule from "./modules/notes";
+import * as TokenImageModule from "./modules/token-image";
+import * as MapModule from "./modules/map";
+import { pipe } from "fp-ts/lib/function";
+import * as E from "fp-ts/lib/Either";
+import * as RT from "fp-ts/lib/ReaderTask";
+import { createTypesFactory, buildGraphQLSchema } from "gqtx";
+import type { Socket as IOSocket, Server as IOServer } from "socket.io";
+import type { ChatPubSubConfig, createChat } from "../chat";
+import type { createUser, UserPubSubConfig } from "../user";
+import type { PubSub } from "@graphql-yoga/subscription";
 
 export const schema = buildGraphQLSchema({
   query: Query,
