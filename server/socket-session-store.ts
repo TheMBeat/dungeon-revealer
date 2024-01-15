@@ -1,4 +1,5 @@
 import type { Socket as IOSocket } from "socket.io";
+import type { Socket } from "socket.io";
 
 export type SocketSessionRecord = {
   id: string;
