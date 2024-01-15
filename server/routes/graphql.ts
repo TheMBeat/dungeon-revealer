@@ -1,4 +1,17 @@
-import { Router, static as expressStatic } from "express";
+import { Router } from "express";
+import { static as expressStatic } from "express";
+import path from "path";
+import fs from "fs-extra";
+import { EventEmitter } from "events";
+import type { Server as IOServer, Socket as IOSocket } from "socket.io";
+import { createPubSub, PubSubConfig, map } from "@graphql-yoga/subscription";
+import { flow } from "fp-ts/lib/function";
+import { schema, GraphQLContextType } from "../graphql";
+import { createChat } from "../chat";
+import { createUser } from "../user";
+import type { Database } from "sqlite";
+import type { SocketSessionStore, SocketSessionRecord } from "../socket-session-store";
+import { ExecutionResult, subscribe as originalSubscribe } from "graphql";
 import path from "path";
 import fs from "fs-extra";
 import { EventEmitter } from "events";
@@ -51,6 +64,13 @@ export default ({
   const pubSub = createPubSub<PubSubConfig>();
 
   const chat = createChat({ pubSub });
+  const user = createUser({
+    sendUserConnectedMessage: ({ name }) =>
+      chat.addOperationalMessage({ content: `**${name}** connected.` }),
+    sendUserDisconnectedMessage: ({ name }) =>
+      chat.addOperationalMessage({ content: `**${name}** disconnected.` }),
+    pubSub,
+  });
 
   const user = createUser({
     sendUserConnectedMessage: ({ name }) =>
