@@ -13,7 +13,7 @@ export const BooleanFromNumber = new t.Type(
     pipe(
       t.number.validate(input, context),
       E.chain((value) => {
-        return t.success(Boolean(value));
+        return value === undefined ? t.failure([t.ValidationError.of(value, context)]): value ? t.success(true):t.success(false);
       })
     ),
   (value) => (value ? 1 : 0)
