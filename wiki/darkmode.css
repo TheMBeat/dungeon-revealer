@@ -1,0 +1,54 @@
+/* Dark Mode Background */
+body, .ui-container {
+    background-color: #121212;
+    color: #E0E0E0;
+}
+
+/* Tokens Styling */
+.token {
+    border: 2px solid #5A5A5A;
+    background-color: #333333;
+    color: #FFFFFF;
+}
+
+.token:hover, .token:focus {
+    border-color: #9A9A9A;
+}
+
+/* Grid Styling */
+.grid-line {
+    stroke: #444444;
+}
+
+.grid-area {
+    fill: #333333;
+    stroke: #444444;
+}
+
+/* Interactive Elements */
+.button, .link, .tool-icon {
+    background-color: #333333;
+    color: #E0E0E0;
+}
+
+.button:hover, .link:hover, .tool-icon:hover {
+    background-color: #454545;
+}
+
+.button:active, .link:active, .tool-icon:active {
+    background-color: #555555;
+}
+
+/* General UI Components */
+.header, .footer, .panel {
+    background-color: #222222;
+    color: #E0E0E0;
+}
+
+.header a, .footer a, .panel a {
+    color: #ADADAD;
+}
+
+.header a:hover, .footer a:hover, .panel a:hover {
+    color: #FFFFFF;
+}
