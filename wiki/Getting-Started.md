@@ -32,3 +32,7 @@ Navigate to the server using a web browser and wait at the home page. (The conne
 Append "?map_only" to the URL in order to hide chat & note UI. E.g. `http://localhost:3000/?map_only`. This could be useful in a setup where all players are around a table with a single monitor, for example.
 
 This can also be used with the password parameter: `http://localhost:3000/?map_only&password=foobar123`.
+
+## Enabling Dark Mode
+
+To enable dark mode, locate the toggle button in the UI. This button allows you to switch between light and dark themes. Once selected, your preference will be saved to your browser's local storage, ensuring that it persists across sessions without the need to log in again.
