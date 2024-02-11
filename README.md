@@ -128,3 +128,9 @@ Navigate to the server using a web browser and wait at the home page. (The conne
 ## Contributing
 
 See the [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Dark Mode
+
+Dungeon Revealer now supports a dark mode! You can switch between light and dark themes using the toggle button provided in the UI. This feature allows you to adjust the appearance to your comfort, especially during late-night gaming sessions.
+
+Your theme preference is saved in the browser's local storage, ensuring that your choice persists across page reloads and sessions. Enjoy the game in whichever theme suits you best!
