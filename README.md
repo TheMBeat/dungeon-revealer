@@ -125,6 +125,14 @@ You can add token with the "Token" tool. Click anywhere on the map to place it. 
 
 Navigate to the server using a web browser and wait at the home page. (The connection information is displayed in command prompt for convenience.) When the dungeon master is ready, they will push a map to your webpage. You will see either a black screen or a partially covered image. You can zoom in/out and pan the map. On a long click you will place a "point of interest" on the map that will show as a red circle.
 
+## Dark Mode Feature
+
+Dungeon Revealer now supports a dark mode to enhance the user experience in low light conditions. To toggle dark mode, users can click the `Toggle Dark Mode` button within the application. This setting persists across sessions.
+
+For developers looking to extend or modify the dark mode styles, please refer to `src/styles/darkmode.scss`. This file contains all the variables and styles for dark mode. You can adjust colors, shadows, and more to fit the theme of your game.
+
+To understand or modify the logic behind toggling dark mode, check out the `DarkModeManager` utility within `src/utils/DarkModeManager.ts`. This utility manages the dark mode state and provides methods to enable, disable, or toggle dark mode programmatically.
+
 ## Contributing
 
 See the [CONTRIBUTING.md](CONTRIBUTING.md).
