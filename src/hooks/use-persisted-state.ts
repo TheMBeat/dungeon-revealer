@@ -11,7 +11,10 @@ export const usePersistedState = <T = unknown>(
 ) => {
   const [value, setValue] = React.useState(() => {
     const rawValue = window.localStorage.getItem(name);
-    return model.decode(rawValue);
+    if (rawValue === null) {
+      return model.decode(undefined);
+    }
+    return rawValue !== null ? model.decode(rawValue) : model.decode(undefined);
   });
 
   const isFirstRunRef = React.useRef(true);
