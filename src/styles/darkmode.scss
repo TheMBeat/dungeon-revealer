@@ -1,0 +1,44 @@
+:root {
+  --primary-color: #ffffff;
+  --background-color: #121212;
+  --secondary-color: #bbbbbb;
+  --accent-color: #007bff;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode {
+  --primary-color: #e0e0e0;
+  --background-color: #333333;
+  --secondary-color: #888888;
+  --accent-color: #4a90e2;
+  --shadow-color: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  color: var(--primary-color);
+  background-color: var(--background-color);
+}
+
+.button {
+  background-color: var(--accent-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.button:hover {
+  background-color: darken(var(--accent-color), 10%);
+}
+
+.header, .footer {
+  background-color: darken(var(--background-color), 5%);
+  color: var(--secondary-color);
+}
+
+.token {
+  border-color: var(--accent-color);
+}
+
+.note {
+  background-color: lighten(var(--background-color), 5%);
+  color: var(--secondary-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
