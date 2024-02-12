@@ -6,6 +6,7 @@ import createCache from "@emotion/cache";
 import { ChakraProvider } from "@chakra-ui/react";
 import { getUrlPrefix, buildUrl } from "./public-url";
 import { globalStyles } from "./global-styles";
+import "./styles/darkmode.scss";
 import { Modal } from "./modal";
 import * as UserStyleSheetOrchestrator from "./user-style-sheet-orchestrator";
 import { registerSoundPlayback } from "./register-sound-playback";
